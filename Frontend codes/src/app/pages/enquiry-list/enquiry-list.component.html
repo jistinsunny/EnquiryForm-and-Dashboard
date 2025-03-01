@@ -1,0 +1,166 @@
+<header class="page-header">
+<div class="container">
+    <h1 class="display-4">Enquiry Management System</h1>
+    <p class="lead">Manage and track customer enquiries efficiently</p>
+  </div>
+</header>
+
+<div class="container">
+  <!-- Search and Filter Section -->
+  <div class="search-container mb-4">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <input type="text" class="form-control" placeholder="Search by name or email">
+      </div>
+      <div class="col-md-3">
+        <select class="form-select">
+          <option selected>Filter by Status</option>
+          <option value="1">New</option>
+          <option value="2">In Progress</option>
+          <option value="3">Resolved</option>
+          <option value="4">Closed</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <select class="form-select">
+          <option selected>Filter by Type</option>
+          <option value="1">Birthday</option>
+          <option value="2">Wedding</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary w-100">Filter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Summary -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary">
+        <div class="card-body">
+          <h5 class="card-title">Total Enquiries</h5>
+          <p class="card-text display-6">124</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-success">
+        <div class="card-body">
+          <h5 class="card-title">Resolved</h5>
+          <p class="card-text display-6">87</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-warning">
+        <div class="card-body">
+          <h5 class="card-title">In Progress</h5>
+          <p class="card-text display-6">28</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-danger">
+        <div class="card-body">
+          <h5 class="card-title">New</h5>
+          <p class="card-text display-6">9</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enquiry List -->
+  <h2 class="enquiry-header">Recent Enquiries</h2>
+  
+  <div class="row" id = "enquiryList">
+    <!-- Enquiry Card 1 -->
+     @for (item of enquiryList; track $index) {
+      <div class="col-md-6">
+        <div class="card enquiry-card enquiry-type-1">
+          <div class="card-body">
+            <span class="badge bg-danger status-badge">{{item.enquiryStatusId}}</span>
+            <h5 class="card-title">{{item.customerName}}</h5>
+            <!-- <h6 class="card-subtitle mb-2 text-muted">{{item.enquiryTypeId}}</h6> -->
+            <div class="d-flex mb-2">
+              <div class="me-3"><i class="bi bi-telephone"></i>{{item.mobileNo}}</div>
+              <div><i class="bi bi-envelope"></i>{{item.email}}</div>
+            </div>
+            <p class="card-text">Message : {{item.message}}</p>
+            <p class="card-text">Resolution : {{item.resolution}}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-muted">Created:{{item.createdDateTime | date: 'dd-MMM-yy'}}</small>
+              <a href="#" class="btn btn-sm btn-outline-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+      </div>
+     }
+
+  </div>
+
+  <!-- Pagination -->
+  <nav aria-label="Page navigation" class="my-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+      </li>
+      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<!-- Add New Enquiry Modal -->
+<div class="modal fade" id="addEnquiryModal" tabindex="-1" aria-labelledby="addEnquiryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addEnquiryModalLabel">Add New Enquiry</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="customerName" class="form-label">Customer Name</label>
+              <input type="text" class="form-control" id="customerName" required>
+            </div>
+            <div class="col-md-6">
+              <label for="mobileNo" class="form-label">Mobile Number</label>
+              <input type="tel" class="form-control" id="mobileNo" required>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="col-md-6">
+              <label for="enquiryType" class="form-label">Enquiry Type</label>
+              <select class="form-select" id="enquiryType" required>
+                <option value="">Select Type</option>
+                <option value="1">General</option>
+                <option value="2">Technical</option>
+                <option value="3">Billing</option>
+                <option value="4">Feature Request</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" id="message" rows="4" required></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Submit Enquiry</button>
+      </div>
+    </div>
+  </div>
+</div>
