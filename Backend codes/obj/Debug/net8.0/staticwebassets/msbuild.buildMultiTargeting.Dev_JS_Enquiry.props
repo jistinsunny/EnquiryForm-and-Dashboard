@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Dev_JS_Enquiry.props" />
+</Project>

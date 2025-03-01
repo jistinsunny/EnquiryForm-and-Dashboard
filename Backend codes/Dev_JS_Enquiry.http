@@ -1,0 +1,6 @@
+@Dev_JS_Enquiry_HostAddress = http://localhost:5107
+
+GET {{Dev_JS_Enquiry_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
